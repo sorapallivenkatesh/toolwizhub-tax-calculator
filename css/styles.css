@@ -49,6 +49,20 @@ body {
   padding: 18px 20px 64px;
 }
 
+/* Slim footer — matches the Tickbox tool footer */
+.app-footer {
+  display: flex; align-items: center; justify-content: center;
+  margin-top: 30px; padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+.app-footer__brand {
+  display: inline-flex; align-items: center; gap: 9px;
+  text-decoration: none; opacity: 0.5; transition: opacity 0.15s;
+}
+.app-footer__brand:hover { opacity: 1; }
+.app-footer__label { font-size: 12px; font-weight: 600; color: var(--muted); }
+.app-footer__brand img { height: 20px; width: auto; display: block; }
+
 /* ---------- App bar ---------- */
 .appbar {
   display: flex;
