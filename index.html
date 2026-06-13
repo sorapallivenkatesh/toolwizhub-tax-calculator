@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ToolWizHub — India Tax Calculator</title>
+    <link rel="icon" type="image/webp" href="assets/favicon.webp" />
+    <link rel="apple-touch-icon" href="assets/logo-icon.webp" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <!-- Top app bar -->
+      <header class="appbar">
+        <div class="brand">
+          <img class="brand-mark" src="assets/logo-icon.webp" alt="ToolWizHub" />
+          <div class="brand-text">
+            <strong>ToolWizHub</strong>
+            <span>TAX COMMAND CENTER</span>
+          </div>
+          <nav class="tabs">
+            <button class="tab active" type="button" data-view="simulator">
+              Simulator
+            </button>
+            <button class="tab" type="button" data-view="optimization">
+              Optimization
+            </button>
+            <button class="tab" type="button" data-view="documents">
+              Documents
+            </button>
+          </nav>
+        </div>
+        <div class="appbar-right">
+          <span class="fy-pill"
+            ><i></i><span id="fy-pill-label">FY 2026-27 Active</span></span
+          >
+          <button class="icon-btn" type="button" aria-label="Settings">
+            ⚙
+          </button>
+          <button class="icon-btn" type="button" aria-label="Profile">◓</button>
+        </div>
+      </header>
+
+      <div class="layout">
+        <!-- Configuration sidebar -->
+        <aside class="sidebar">
+          <div class="sidebar-head">
+            <span class="eyebrow">Configuration</span>
+            <button id="reset-all" class="link-btn" type="button">
+              Reset All
+            </button>
+          </div>
+
+          <section class="panel">
+            <h2><span class="panel-ico">⚙</span> Basics</h2>
+            <label class="lbl" for="fy">Financial Year</label>
+            <select id="fy" class="control"></select>
+
+            <label class="lbl" for="gross">Annual Gross Salary (CTC)</label>
+            <div class="rupee-field">
+              <span>₹</span><input type="number" id="gross" value="2500000" />
+            </div>
+
+            <label class="lbl" for="basic">Annual Basic Salary</label>
+            <div class="rupee-field">
+              <span>₹</span><input type="number" id="basic" value="1000000" />
+            </div>
+            <p class="hint">Basic drives HRA and employer-NPS limits.</p>
+          </section>
+
+          <section class="panel">
+            <h2>
+              <span class="panel-ico">💸</span> Deductions
+              <span class="panel-tag" id="ded-total">₹0</span>
+            </h2>
+            <span class="regime-flag">Old regime only</span>
+
+            <label class="lbl" for="hra"
+              >House Rent Allowance received (annual)</label
+            >
+            <div class="rupee-field">
+              <span>₹</span><input type="number" id="hra" value="0" />
+            </div>
+
+            <label class="lbl" for="rent">Rent paid (annual)</label>
+            <div class="rupee-field">
+              <span>₹</span><input type="number" id="rent" value="0" />
+            </div>
+            <label class="check-row">
+              <input type="checkbox" id="metro" checked />
+              <span>Metro city (Mumbai / Delhi / Kolkata / Chennai)</span>
+            </label>
+
+            <label class="lbl" for="d80c">Section 80C (max ₹1,50,000)</label>
+            <div class="rupee-field">
+              <span>₹</span><input type="number" id="d80c" value="0" />
+            </div>
+
+            <label class="lbl" for="d80d">80D — Health insurance</label>
+            <div class="rupee-field">
+              <span>₹</span><input type="number" id="d80d" value="0" />
+            </div>
+
+            <label class="lbl" for="d80ccd1b"
+              >NPS 80CCD(1B) — self (max ₹50,000)</label
+            >
+            <div class="rupee-field">
+              <span>₹</span><input type="number" id="d80ccd1b" value="0" />
+            </div>
+
+            <details class="more">
+              <summary>More deductions</summary>
+              <label class="lbl" for="d80e"
+                >80E — Education loan interest</label
+              >
+              <div class="rupee-field">
+                <span>₹</span><input type="number" id="d80e" value="0" />
+              </div>
+              <label class="lbl" for="d24b"
+                >24(b) — Home loan interest (max ₹2,00,000)</label
+              >
+              <div class="rupee-field">
+                <span>₹</span><input type="number" id="d24b" value="0" />
+              </div>
+              <label class="lbl" for="d80eea"
+                >80EEA — Affordable housing (max ₹1,50,000)</label
+              >
+              <div class="rupee-field">
+                <span>₹</span><input type="number" id="d80eea" value="0" />
+              </div>
+              <label class="lbl" for="d80eeb"
+                >80EEB — EV loan interest (max ₹1,50,000)</label
+              >
+              <div class="rupee-field">
+                <span>₹</span><input type="number" id="d80eeb" value="0" />
+              </div>
+              <label class="lbl" for="d80g">80G — Donations</label>
+              <div class="rupee-field">
+                <span>₹</span><input type="number" id="d80g" value="0" />
+              </div>
+              <label class="lbl" for="lta">LTA — exempt portion</label>
+              <div class="rupee-field">
+                <span>₹</span><input type="number" id="lta" value="0" />
+              </div>
+            </details>
+          </section>
+
+          <section class="panel">
+            <h2><span class="panel-ico">☁</span> FBP Components</h2>
+            <p class="hint" style="margin-top: -4px">
+              Optimize your Flexible Benefit Plan — toggle a component and enter
+              its annual amount.
+            </p>
+            <div id="fbp-list"></div>
+            <label class="check-row nps-row">
+              <input type="checkbox" id="fbp_nps_on" />
+              <span
+                >Employer NPS — 80CCD(2)
+                <em>(auto: 14% / 10% of Basic)</em></span
+              >
+            </label>
+          </section>
+        </aside>
+
+        <!-- Main command center -->
+        <main class="main">
+          <!-- Simulator view -->
+          <div data-view="simulator">
+            <section id="hero" class="hero"></section>
+            <section id="stat-strip" class="stat-strip"></section>
+            <section id="scenario-cards" class="scenario-cards"></section>
+
+            <section class="panel matrix-panel">
+              <div class="matrix-head">
+                <h2><span class="panel-ico">▦</span> Full Scenario Matrix</h2>
+                <button id="export-pdf" class="ghost-btn" type="button">
+                  ⤓ Export PDF
+                </button>
+              </div>
+              <div class="matrix-scroll">
+                <table id="matrix" class="matrix"></table>
+              </div>
+            </section>
+
+            <div class="bottom-grid">
+              <section class="panel">
+                <h2><span class="panel-ico">📈</span> Monthly Cashflow</h2>
+                <div id="cashflow"></div>
+              </section>
+              <section class="panel">
+                <h2><span class="panel-ico">💡</span> Smart Insights</h2>
+                <ul id="insights" class="insights"></ul>
+              </section>
+            </div>
+
+            <section class="panel">
+              <h2>
+                <span class="panel-ico">📅</span> Tax Across Financial Years
+              </h2>
+              <p class="hint" style="margin-top: -6px">
+                Your current salary &amp; deductions, taxed under each year's
+                rules (best regime per year). Hover a bar for detail.
+              </p>
+              <div id="yoy" class="yoy"></div>
+            </section>
+
+            <section class="panel">
+              <details class="assume">
+                <summary>
+                  <span class="panel-ico">📋</span> Assumptions &amp; Sources
+                </summary>
+                <ul id="assumptions" class="assume-list"></ul>
+              </details>
+            </section>
+          </div>
+
+          <!-- Optimization view -->
+          <div data-view="optimization" hidden>
+            <section class="panel">
+              <h2><span class="panel-ico">🎯</span> Deduction Headroom</h2>
+              <p class="hint" style="margin-top: -6px">
+                How much of each statutory cap you've used (Old Regime only).
+              </p>
+              <div id="headroom"></div>
+            </section>
+            <section class="panel">
+              <h2><span class="panel-ico">💡</span> Optimization Tips</h2>
+              <ul id="opt-tips" class="insights"></ul>
+            </section>
+          </div>
+
+          <!-- Documents view -->
+          <div data-view="documents" hidden>
+            <section class="panel">
+              <h2>
+                <span class="panel-ico">📄</span> Form 16 Import
+                <span class="panel-tag" style="color: var(--primary); background: rgba(124,140,255,0.1); border-color: rgba(124,140,255,0.25)">BETA</span>
+              </h2>
+              <p class="hint" style="margin-top: -6px">
+                Upload your Form 16 Part B (PDF). It's parsed entirely in your
+                browser — nothing is uploaded. Review the extracted figures
+                before applying.
+              </p>
+              <label id="form16-drop" class="dropzone">
+                <input
+                  id="form16-file"
+                  type="file"
+                  accept="application/pdf,.pdf"
+                  hidden
+                />
+                <span class="dropzone-ico">📄</span>
+                <span class="dropzone-main"
+                  >Drag &amp; drop your Form 16 PDF here</span
+                >
+                <span class="dropzone-sub">or click to browse</span>
+              </label>
+              <div id="form16-status" class="hint"></div>
+              <div id="form16-result"></div>
+            </section>
+
+            <section class="panel">
+              <h2><span class="panel-ico">📁</span> Saved Profiles</h2>
+              <p class="hint" style="margin-top: -6px">
+                Save the current configuration locally, or back it up to a file.
+              </p>
+              <div class="doc-actions">
+                <input
+                  id="profile-name"
+                  class="text-input"
+                  type="text"
+                  placeholder="Profile name (e.g. FY27 with home loan)"
+                />
+                <button id="save-profile" class="ghost-btn" type="button">
+                  ＋ Save current
+                </button>
+                <button id="export-json" class="ghost-btn" type="button">
+                  ⤓ Export JSON
+                </button>
+                <label class="ghost-btn import-btn">
+                  ⤒ Import JSON
+                  <input
+                    id="import-json"
+                    type="file"
+                    accept="application/json,.json"
+                    hidden
+                  />
+                </label>
+              </div>
+              <div id="profiles-list" class="profiles"></div>
+            </section>
+
+            <section class="panel">
+              <h2><span class="panel-ico">✅</span> Document Checklist</h2>
+              <p class="hint" style="margin-top: -6px">
+                Proofs to keep ready for the figures you've entered.
+              </p>
+              <div id="checklist"></div>
+            </section>
+
+            <section class="panel matrix-panel">
+              <div class="matrix-head">
+                <h2>
+                  <span class="panel-ico">🧾</span> Tax Computation Statement
+                </h2>
+                <div class="doc-btn-row">
+                  <button id="print-statement" class="ghost-btn" type="button">
+                    🖨 Print
+                  </button>
+                  <button id="export-csv" class="ghost-btn" type="button">
+                    ⤓ Export CSV
+                  </button>
+                </div>
+              </div>
+              <div id="statement"></div>
+            </section>
+
+            <section class="panel">
+              <div class="matrix-head">
+                <h2>
+                  <span class="panel-ico">📝</span> Investment Declaration
+                </h2>
+                <button id="copy-declaration" class="ghost-btn" type="button">
+                  ⧉ Copy
+                </button>
+              </div>
+              <p class="hint" style="margin-top: -6px">
+                Figures to declare to your employer/payroll.
+              </p>
+              <div id="declaration"></div>
+            </section>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>
