@@ -9,6 +9,7 @@ import { initForm16 } from "./ui/form16.js";
 import { getFY } from "./ui/inputs.js";
 import { FINANCIAL_YEARS, DEFAULT_FY } from "./config/tax-rules.js";
 import { FBP_MAX } from "./config/fbp.js";
+import { playSplash } from "./ui/splash.js";
 
 const BASIC_RATIO = 0.5; // default Basic = 50% of Gross until user edits Basic
 
@@ -107,3 +108,4 @@ wireTabs();
 initDocuments(render);
 initForm16(render);
 render();
+playSplash();
